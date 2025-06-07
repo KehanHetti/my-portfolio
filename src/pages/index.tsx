@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+// pages/index.tsx
+import { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
-import { GetStaticProps } from 'next';
-
+import type { GetStaticProps } from 'next';
 
 import Nav from '../components/Nav';
 import Hero from '../components/Hero';
@@ -23,18 +23,18 @@ interface HomeProps {
 }
 
 const SECTIONS = [
-  { id: 'hero', label: 'Home' },
-  { id: 'about', label: 'About' },
-  { id: 'resume', label: 'Resume' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'activities', label: 'Courses' },
-  { id: 'statistics', label: 'Skills' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'hero',       label: 'Home'     },
+  { id: 'about',      label: 'About'    },
+  { id: 'resume',     label: 'Resume'   },
+  { id: 'projects',   label: 'Projects' },
+  { id: 'activities', label: 'Courses'  },
+  { id: 'statistics', label: 'Skills'   },
+  { id: 'contact',    label: 'Contact'  },
 ];
 
 export default function Home({ projects }: HomeProps) {
-  const [showBanner, setShowBanner] = useState(true);
   const [activeSection, setActiveSection] = useState<string>('hero');
+  const mainRef = useRef<HTMLElement>(null);
 
   // Highlight nav links on scroll
   useEffect(() => {
@@ -57,11 +57,42 @@ export default function Home({ projects }: HomeProps) {
     return () => observer.disconnect();
   }, []);
 
-  // Smooth scroll handler
+  // Smooth scroll helper
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
+
+  // One‐notch‐per‐section wheel handler
+  useEffect(() => {
+    const node = mainRef.current;
+    if (!node) return;
+
+    let isThrottled = false;
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (isThrottled) return;
+
+      const dir = e.deltaY > 0 ? 1 : -1;
+      const idx = SECTIONS.findIndex((s) => s.id === activeSection);
+      let next = idx + dir;
+      next = Math.max(0, Math.min(SECTIONS.length - 1, next));
+
+      if (next !== idx) {
+        scrollTo(SECTIONS[next].id);
+        isThrottled = true;
+        setTimeout(() => {
+          isThrottled = false;
+        }, 700);
+      }
+    };
+
+    node.addEventListener('wheel', onWheel as any, { passive: false });
+    return () => {
+      node.removeEventListener('wheel', onWheel as any);
+    };
+  }, [activeSection]);
 
   return (
     <>
@@ -69,7 +100,6 @@ export default function Home({ projects }: HomeProps) {
         <title>Kehan Hettiarachchi | Portfolio</title>
       </Head>
 
-      {/* Global styles: smooth scroll, snap */}
       <style jsx global>{`
         html,
         body {
@@ -85,17 +115,16 @@ export default function Home({ projects }: HomeProps) {
         }
       `}</style>
 
-      
-
-      {/* Sticky nav */}
       <Nav
         sections={SECTIONS}
         activeSection={activeSection}
         scrollTo={scrollTo}
       />
 
-      {/* Page sections */}
-      <main>
+      <main
+        ref={mainRef}
+        className="overflow-hidden h-screen"
+      >
         <Hero scrollTo={scrollTo} />
         <About />
         <Resume />

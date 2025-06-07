@@ -14,7 +14,7 @@ type NavProps = {
 
 export default function Nav({ sections, activeSection, scrollTo }: NavProps) {
   return (
-    <nav className="sticky top-0 bg-transparent shadow-lg z-40">
+     <nav className="fixed top-0 left-0 w-full bg-transparent shadow-lg z-40">
       <ul className="flex justify-center space-x-8 py-4">
         {sections.map((sec) => (
           <li key={sec.id}>
