@@ -1,6 +1,14 @@
-import React, { useEffect, useRef } from 'react';
-import Image from 'next/image';
-import { FaHeart, FaBrain, FaRocket, FaGraduationCap, FaUsers, FaMountain, FaFutbol } from 'react-icons/fa';
+import React, { useEffect, useRef } from "react";
+import Image from "next/image";
+import {
+  FaHeart,
+  FaBrain,
+  FaRocket,
+  FaGraduationCap,
+  FaUsers,
+  FaMountain,
+  FaFutbol,
+} from "react-icons/fa";
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -10,11 +18,11 @@ export default function About() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
+            entry.target.classList.add("animate-fade-in-up");
           }
         });
       },
-      { threshold: 0.3, rootMargin: '0px 0px -20% 0px' }
+      { threshold: 0.3, rootMargin: "0px 0px -20% 0px" },
     );
 
     if (sectionRef.current) {
@@ -25,16 +33,16 @@ export default function About() {
   }, []);
 
   const traits = [
-    { icon: FaHeart, text: 'Caring' },
-    { icon: FaBrain, text: 'Determined' },
-    { icon: FaRocket, text: 'Motivated' },
+    { icon: FaHeart, text: "Caring" },
+    { icon: FaBrain, text: "Determined" },
+    { icon: FaRocket, text: "Motivated" },
   ];
 
   const hobbies = [
-    { image: '/Hiking.JPEG', title: 'Hiking', icon: FaMountain },
-    { image: '/Soccer.JPEG', title: 'Soccer', icon: FaFutbol },
-    { image: '/Graduation.JPEG', title: 'Education', icon: FaGraduationCap },
-    { image: '/Hackathons.JPEG', title: 'Hackathons', icon: FaUsers },
+    { image: "/Hiking.JPEG", title: "Hiking", icon: FaMountain },
+    { image: "/Soccer.JPEG", title: "Soccer", icon: FaFutbol },
+    { image: "/Graduation.JPEG", title: "Education", icon: FaGraduationCap },
+    { image: "/Hackathons.JPEG", title: "Hackathons", icon: FaUsers },
   ];
 
   return (
@@ -46,7 +54,9 @@ export default function About() {
       <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-16">
         <div className="space-y-12 sm:space-y-16">
           <div className="space-y-6 sm:space-y-8">
-            <div className="text-sm text-muted-foreground font-mono tracking-wider">ABOUT</div>
+            <div className="text-sm text-muted-foreground font-mono tracking-wider">
+              ABOUT
+            </div>
             <h2 className="text-3xl sm:text-4xl font-light">About Me</h2>
           </div>
 
@@ -79,36 +89,41 @@ export default function About() {
 
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  I&apos;m a determined, caring, and motivated computer science student at UBC,
-                  with hands-on experience building full-stack applications in
-                  TypeScript, React, and Next.js, as well as machine-learning pipelines
-                  in Python. My drive comes from witnessing my family&apos;s sacrifices, they
-                  immigrated from Sri Lanka to give me opportunities I could only dream
-                  of, and I&apos;m committed to using my technical skills to create software
-                  that makes a positive impact in people&apos;s lives.
+                  I&apos;m a determined, caring, and motivated computer science
+                  student at UBC, with hands-on experience building full-stack
+                  applications in TypeScript, React, and Next.js, as well as
+                  machine-learning pipelines in Python. My drive comes from
+                  witnessing my family&apos;s sacrifices, they immigrated from
+                  Sri Lanka to give me opportunities I could only dream of, and
+                  I&apos;m committed to using my technical skills to create
+                  software that makes a positive impact in people&apos;s lives.
                 </p>
 
                 <p>
-                  Outside of coding, I prioritize physical and mental balance. You&apos;ll
-                  often find me at the gym refining my discipline with strength
-                  training, or out on a PNW trail, hiking through forests and mountains
-                  to recharge and spark fresh ideas. My current focus is on pushing my
-                  limits in the gym and on the trail.
+                  Outside of coding, I prioritize physical and mental balance.
+                  You&apos;ll often find me at the gym refining my discipline
+                  with strength training, or out on a PNW trail, hiking through
+                  forests and mountains to recharge and spark fresh ideas. My
+                  current focus is on pushing my limits in the gym and on the
+                  trail.
                 </p>
 
                 <p>
-                  Education and community are at the heart of everything I do. Whether
-                  I&apos;m debugging a tricky algorithm or planning a group workout, I bring
-                  dedication and empathy to help others and achieve meaningful results.
-                  My goal is to blend innovation with compassion to leave the world a
-                  little better than I found it.
+                  Education and community are at the heart of everything I do.
+                  Whether I&apos;m debugging a tricky algorithm or planning a
+                  group workout, I bring dedication and empathy to help others
+                  and achieve meaningful results. My goal is to blend innovation
+                  with compassion to leave the world a little better than I
+                  found it.
                 </p>
               </div>
             </div>
 
             {/* Hobbies Horizontal Strip */}
             <div className="space-y-4">
-              <div className="text-sm text-muted-foreground font-mono">HOBBIES & INTERESTS</div>
+              <div className="text-sm text-muted-foreground font-mono">
+                HOBBIES & INTERESTS
+              </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {hobbies.map((hobby, idx) => {
                   const Icon = hobby.icon;
@@ -124,7 +139,9 @@ export default function About() {
                           width={400}
                           height={300}
                           className={`object-cover w-full h-full transition-transform duration-300 group-hover:scale-110 ${
-                            hobby.title === 'Education' ? 'object-[center_top] scale-90' : ''
+                            hobby.title === "Education"
+                              ? "object-[center_top] scale-90"
+                              : ""
                           }`}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

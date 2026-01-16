@@ -1,7 +1,13 @@
 // components/Hero.tsx
 
-import React from 'react';
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaArrowDown } from 'react-icons/fa';
+import React from "react";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaEnvelope,
+  FaPhone,
+  FaArrowDown,
+} from "react-icons/fa";
 
 type HeroProps = {
   scrollTo: (id: string) => void;
@@ -14,18 +20,19 @@ export default function Hero({ scrollTo }: HeroProps) {
       className="relative h-screen w-full overflow-hidden"
       style={{
         backgroundImage: "url('/background.jpg')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       {/* 1) Semi-transparent overlay covering entire hero */}
       <div className="absolute inset-0 bg-black/50 z-10" />
 
       {/* Gradient mask at bottom to fade city into black */}
-      <div 
+      <div
         className="absolute bottom-0 left-0 right-0 h-[20%] z-15 pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, transparent 0%, #0a0a0a 100%)'
+          background:
+            "linear-gradient(to bottom, transparent 0%, #0a0a0a 100%)",
         }}
       />
 
@@ -93,7 +100,7 @@ export default function Hero({ scrollTo }: HeroProps) {
       {/* 3) Down-arrow button at the very bottom */}
       <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 transform">
         <button
-          onClick={() => scrollTo('about')}
+          onClick={() => scrollTo("about")}
           className="rounded-full bg-slate-800/60 backdrop-blur-sm p-3 hover:bg-amber-500/20 border border-slate-600/50 hover:border-amber-500/50 transition-all duration-300 hover:scale-110"
           aria-label="Scroll down"
         >

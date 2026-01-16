@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import React, { useEffect, useRef } from "react";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
 interface Project {
   id: number;
@@ -22,11 +22,11 @@ export default function Projects({ projects }: ProjectsProps) {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in-up');
+            entry.target.classList.add("animate-fade-in-up");
           }
         });
       },
-      { threshold: 0.3, rootMargin: '0px 0px -20% 0px' }
+      { threshold: 0.3, rootMargin: "0px 0px -20% 0px" },
     );
 
     if (sectionRef.current) {
@@ -41,22 +41,22 @@ export default function Projects({ projects }: ProjectsProps) {
     if (p.id === 1) {
       return {
         ...p,
-        tech: ['Python', 'OpenCV', 'TensorFlow', 'Machine Learning'],
-        githubUrl: 'https://github.com/KehanHetti',
+        tech: ["Python", "OpenCV", "TensorFlow", "Machine Learning"],
+        githubUrl: "https://github.com/KehanHetti",
       };
     }
     if (p.id === 2) {
       return {
         ...p,
-        tech: ['Python', 'JavaScript', 'Speech Recognition', 'Web Development'],
-        githubUrl: 'https://github.com/KehanHetti',
+        tech: ["Python", "JavaScript", "Speech Recognition", "Web Development"],
+        githubUrl: "https://github.com/KehanHetti",
       };
     }
     if (p.id === 3) {
       return {
         ...p,
-        tech: ['Next.js', 'TypeScript', 'Golang', 'Web Development'],
-        githubUrl: 'https://github.com/KehanHetti',
+        tech: ["Next.js", "TypeScript", "Golang", "Web Development"],
+        githubUrl: "https://github.com/KehanHetti",
       };
     }
     return p;
@@ -70,12 +70,14 @@ export default function Projects({ projects }: ProjectsProps) {
     >
       {/* Sunset Glow Top Border */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-gradient-to-b from-orange-500/10 via-purple-500/10 to-transparent blur-3xl pointer-events-none" />
-      
+
       <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-16 relative z-10">
         <div className="space-y-12 sm:space-y-16">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <h2 className="text-3xl sm:text-4xl font-light">Selected Work</h2>
-            <div className="text-sm text-muted-foreground font-mono">PROJECTS</div>
+            <div className="text-sm text-muted-foreground font-mono">
+              PROJECTS
+            </div>
           </div>
 
           <div className="space-y-8 sm:space-y-12">
@@ -84,10 +86,9 @@ export default function Projects({ projects }: ProjectsProps) {
                 key={project.id}
                 className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-border transition-colors duration-500"
               >
-
                 <div className="lg:col-span-2">
                   <div className="text-xl sm:text-2xl font-light text-muted-foreground group-hover:text-foreground transition-colors duration-500">
-                    {String(index + 1).padStart(2, '0')}
+                    {String(index + 1).padStart(2, "0")}
                   </div>
                 </div>
 
@@ -97,7 +98,9 @@ export default function Projects({ projects }: ProjectsProps) {
                       {project.title}
                     </h3>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed max-w-lg">{project.summary}</p>
+                  <p className="text-muted-foreground leading-relaxed max-w-lg">
+                    {project.summary}
+                  </p>
                 </div>
 
                 <div className="lg:col-span-4 flex flex-wrap gap-2 lg:justify-end items-start mt-2 lg:mt-0">

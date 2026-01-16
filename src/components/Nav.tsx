@@ -1,5 +1,5 @@
 // components/Nav.tsx
-import React from 'react';
+import React from "react";
 
 interface Section {
   id: string;
@@ -22,8 +22,8 @@ export default function Nav({ sections, activeSection, scrollTo }: NavProps) {
             onClick={() => scrollTo(section.id)}
             className={`w-2 h-8 rounded-full transition-all duration-500 ${
               activeSection === section.id
-                ? 'bg-foreground'
-                : 'bg-muted-foreground/30 hover:bg-muted-foreground/60'
+                ? "bg-foreground"
+                : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
             }`}
             aria-label={`Navigate to ${section.label}`}
           />
