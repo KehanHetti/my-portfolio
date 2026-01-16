@@ -8,7 +8,7 @@ import { FaCode, FaTools, FaServer, FaMicrophone, FaBrain, FaJava, FaLaptopCode 
 
 interface Skill {
   name: string;
-  icon: React.ComponentType;
+  icon: React.ComponentType<{ className?: string }>;
   level: number; // 1-5
   category: 'Languages' | 'Technologies' | 'Tools';
 }

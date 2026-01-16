@@ -1,5 +1,5 @@
 // pages/index.tsx
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Head from 'next/head';
 import type { GetStaticProps } from 'next';
 
@@ -58,10 +58,10 @@ export default function Home({ projects }: HomeProps) {
   }, []);
 
   // Smooth scroll helper
-  const scrollTo = (id: string) => {
+  const scrollTo = useCallback((id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   // Slideshow behavior for hero section only
   useEffect(() => {
@@ -69,7 +69,6 @@ export default function Home({ projects }: HomeProps) {
     if (!node) return;
 
     let isThrottled = false;
-    let lastScrollTop = 0;
 
     const onWheel = (e: WheelEvent) => {
       const hero = document.getElementById('hero');
@@ -94,9 +93,9 @@ export default function Home({ projects }: HomeProps) {
       }
     };
 
-    node.addEventListener('wheel', onWheel as any, { passive: false });
+    node.addEventListener('wheel', onWheel as EventListener, { passive: false });
     return () => {
-      node.removeEventListener('wheel', onWheel as any);
+      node.removeEventListener('wheel', onWheel as EventListener);
     };
   }, [scrollTo]);
 

@@ -9,14 +9,14 @@ interface Project {
   tech?: string[];
   githubUrl?: string;
   projectUrl?: string;
-  icon?: React.ComponentType;
+  icon?: React.ComponentType<{ className?: string }>;
 }
 
 type ProjectsProps = {
   projects: Project[];
 };
 
-const TECH_ICONS: { [key: string]: React.ComponentType } = {
+const TECH_ICONS: { [key: string]: React.ComponentType<{ className?: string }> } = {
   Python: FaPython,
   TensorFlow: SiTensorflow,
   OpenCV: SiOpencv,
@@ -62,10 +62,6 @@ export default function Projects({ projects }: ProjectsProps) {
       projects.flatMap((p) => p.tech || [])
     )
   );
-
-  const filteredProjects = activeFilter === 'All' 
-    ? projects 
-    : projects.filter((p) => p.tech?.includes(activeFilter));
 
   // Enhanced projects with tech stacks
   const enhancedProjects: Project[] = projects.map((p) => {

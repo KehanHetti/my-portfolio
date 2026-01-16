@@ -77,17 +77,17 @@ export default function About() {
         <div className={`max-w-6xl mx-auto mb-4 flex-1 ${isVisible ? 'fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
           <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5 shadow-xl">
             <p className="text-xs text-slate-300 leading-relaxed mb-2.5">
-              I'm a determined, caring, and motivated computer science student at UBC,
+              I&apos;m a determined, caring, and motivated computer science student at UBC,
               with hands-on experience building full-stack applications in
               TypeScript, React, and Next.js, as well as machine-learning pipelines
-              in Python. My drive comes from witnessing my family's sacrifices—they
+              in Python. My drive comes from witnessing my family&apos;s sacrifices—they
               immigrated from Sri Lanka to give me opportunities I could only dream
-              of—and I'm committed to using my technical skills to create software
-              that makes a positive impact in people's lives.
+              of—and I&apos;m committed to using my technical skills to create software
+              that makes a positive impact in people&apos;s lives.
             </p>
 
             <p className="text-xs text-slate-300 leading-relaxed mb-2.5">
-              Outside of coding, I prioritize physical and mental balance. You'll
+              Outside of coding, I prioritize physical and mental balance. You&apos;ll
               often find me at the gym refining my discipline with strength
               training, or out on a PNW trail—hiking through forests and mountains
               to recharge and spark fresh ideas. My current focus is on pushing my
@@ -96,7 +96,7 @@ export default function About() {
 
             <p className="text-xs text-slate-300 leading-relaxed">
               Education and community are at the heart of everything I do. Whether
-              I'm debugging a tricky algorithm or planning a group workout, I bring
+              I&apos;m debugging a tricky algorithm or planning a group workout, I bring
               dedication and empathy to help others and achieve meaningful results.
               My goal is to blend innovation with compassion to leave the world a
               little better than I found it.

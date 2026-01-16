@@ -5,7 +5,7 @@ interface Course {
   name: string;
   description: string;
   category: 'CS' | 'Math' | 'Data Science';
-  icon: React.ComponentType;
+  icon: React.ComponentType<{ className?: string }>;
   completed: boolean;
 }
 
@@ -154,7 +154,6 @@ export default function Courses() {
         <div className="space-y-6">
           {Object.entries(coursesByCategory).map(([category, courses], categoryIdx) => {
             const categoryInfo = CATEGORY_INFO[category as keyof typeof CATEGORY_INFO];
-            const CategoryIcon = categoryInfo.icon;
             
             return (
               <div

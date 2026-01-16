@@ -54,7 +54,7 @@ export default function Contact() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 relative z-10 flex-1 flex flex-col min-h-0">
         <div className={`text-center mb-12 flex-shrink-0 ${isVisible ? 'fade-in-up' : 'opacity-0'}`}>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Let's Connect</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Let&apos;s Connect</h2>
           <p className="text-slate-300 text-lg leading-relaxed">Get in touch with me</p>
         </div>
 
