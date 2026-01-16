@@ -63,28 +63,34 @@ export default function Home({ projects }: HomeProps) {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // One‐notch‐per‐section wheel handler
+  // Slideshow behavior for hero section only
   useEffect(() => {
     const node = mainRef.current;
     if (!node) return;
 
     let isThrottled = false;
+    let lastScrollTop = 0;
 
     const onWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      if (isThrottled) return;
+      const hero = document.getElementById('hero');
+      if (!hero) return;
 
-      const dir = e.deltaY > 0 ? 1 : -1;
-      const idx = SECTIONS.findIndex((s) => s.id === activeSection);
-      let next = idx + dir;
-      next = Math.max(0, Math.min(SECTIONS.length - 1, next));
-
-      if (next !== idx) {
-        scrollTo(SECTIONS[next].id);
+      const heroRect = hero.getBoundingClientRect();
+      const isInHero = heroRect.top >= 0 && heroRect.bottom <= window.innerHeight;
+      
+      // Only apply slideshow behavior when in hero section
+      if (isInHero && !isThrottled) {
+        e.preventDefault();
         isThrottled = true;
+        
+        if (e.deltaY > 0) {
+          // Scrolling down - go to About
+          scrollTo('about');
+        }
+        
         setTimeout(() => {
           isThrottled = false;
-        }, 700);
+        }, 800);
       }
     };
 
@@ -92,7 +98,7 @@ export default function Home({ projects }: HomeProps) {
     return () => {
       node.removeEventListener('wheel', onWheel as any);
     };
-  }, [activeSection]);
+  }, [scrollTo]);
 
   return (
     <>
@@ -108,10 +114,15 @@ export default function Home({ projects }: HomeProps) {
           padding: 0;
         }
         main {
-          scroll-snap-type: y mandatory;
+          overflow-y: auto;
+          scroll-snap-type: y proximity;
+        }
+        #hero {
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
         }
         section {
-          scroll-snap-align: start;
+          min-height: 100vh;
         }
       `}</style>
 
@@ -123,7 +134,7 @@ export default function Home({ projects }: HomeProps) {
 
       <main
         ref={mainRef}
-        className="overflow-hidden h-screen"
+        className="overflow-y-auto h-screen"
       >
         <Hero scrollTo={scrollTo} />
         <About />
@@ -143,13 +154,19 @@ export const getStaticProps: GetStaticProps = async () => {
       id: 1,
       title: 'Counter Strike 2 Damage Detection System',
       summary:
-        'Engineered a deep learning model achieving 90%+ accuracy in real-time detection and classification of 6 in-game events; Automated data pipeline to process 3+ hours of gameplay footage, improving generalization by 35%; Coordinated a 3-person development team delivering production-ready system in 4 months.',
+        'Built ML-powered system to detect in-game damage events in real time using Python, OpenCV, and TensorFlow. Achieved 90%+ classification accuracy and reduced overall event misclassification by 35% via preprocessing. Engineered automated data pipeline to preprocess raw gameplay footage, improving training efficiency by 40%. Led a 3-person cross-functional team using Agile methods to successfully deliver a production-ready MVP.',
     },
     {
       id: 2,
       title: 'Navis – AI-Powered Voice Navigation Tool',
       summary:
-        'Developed a voice navigation tool supporting 15+ commands with 95% recognition accuracy; Implemented accessibility features compatible with major screen readers; Reduced navigation time by 60% compared to mouse-based browsing.',
+        'Developed AI-powered tool enabling hands-free navigation using Python, JavaScript, and speech recognition. Integrated advanced speech recognition engine achieving 95%+ command accuracy across major browsers. Reduced navigation by 60% compared to manual interaction through optimized voice command processing. Implemented essential WCAG-compliant features, supporting major screen readers and accessibility standards.',
+    },
+    {
+      id: 3,
+      title: 'Content Distributer',
+      summary:
+        'Developed a full-stack content distribution system enabling simultaneous uploads to Instagram, Reddit, YouTube, Pinterest, and LinkedIn using Next.js and Golang. Engineered concurrent upload workers with retry logic, validation, and dynamic forms for platform requirements. Instrumented metrics to monitor throughput and latency, improving efficiency by 40% under load.',
     },
   ];
 
