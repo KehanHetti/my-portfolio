@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
+import Link from 'next/link';
 
 export default function Contact() {
-  const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -11,11 +11,11 @@ export default function Contact() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true);
+            entry.target.classList.add('animate-fade-in-up');
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.3, rootMargin: '0px 0px -20% 0px' }
     );
 
     if (sectionRef.current) {
@@ -27,7 +27,6 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission (you can integrate with a service like Formspree, EmailJS, etc.)
     const mailtoLink = `mailto:kehanhetti@gmail.com?subject=Contact from ${formData.name}&body=${encodeURIComponent(formData.message)}`;
     window.location.href = mailtoLink;
     setFormData({ name: '', email: '', message: '' });
@@ -44,167 +43,118 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="bg-slate-800/50 py-24 md:py-32 relative flex flex-col overflow-y-auto"
+      className="py-20 sm:py-32 opacity-0 relative"
     >
-      {/* Background Elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-64 h-64 bg-amber-500 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-amber-500 rounded-full blur-3xl" />
-      </div>
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-16">
+        <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-6 sm:space-y-8">
+              <div className="text-sm text-muted-foreground font-mono tracking-wider">CONTACT</div>
+              <h2 className="text-3xl sm:text-4xl font-light">Let&apos;s Connect</h2>
+            </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 relative z-10 flex-1 flex flex-col min-h-0">
-        <div className={`text-center mb-12 flex-shrink-0 ${isVisible ? 'fade-in-up' : 'opacity-0'}`}>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Let&apos;s Connect</h2>
-          <p className="text-slate-300 text-lg leading-relaxed">Get in touch with me</p>
-        </div>
+            <div className="space-y-6">
+              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
+                Always interested in new opportunities, collaborations, and conversations about technology and design.
+              </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 flex-1 min-h-0 mb-12">
-          {/* Contact Information */}
-          <div className={`${isVisible ? 'fade-in-up' : 'opacity-0'} flex flex-col`} style={{ animationDelay: '0.2s' }}>
-            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 flex-1 flex flex-col min-h-0">
-              <h3 className="text-xl font-bold text-white mb-6 flex-shrink-0">Contact Information</h3>
-              
-              <div className="space-y-4 flex-1 min-h-0">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-amber-500/20 border border-amber-500/50 flex items-center justify-center flex-shrink-0">
-                    <FaEnvelope className="text-amber-500 text-lg" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-slate-400 text-sm mb-1">Email</p>
-                    <a
-                      href="mailto:kehanhetti@gmail.com"
-                      className="text-white text-base hover:text-amber-500 transition-colors break-all"
-                    >
-                      kehanhetti@gmail.com
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-amber-500/20 border border-amber-500/50 flex items-center justify-center flex-shrink-0">
-                    <FaPhone className="text-amber-500 text-lg" />
-                  </div>
-                  <div>
-                    <p className="text-slate-400 text-sm mb-1">Phone</p>
-                    <a
-                      href="tel:+16047272452"
-                      className="text-white text-base hover:text-amber-500 transition-colors"
-                    >
-                      604-727-2452
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-amber-500/20 border border-amber-500/50 flex items-center justify-center flex-shrink-0">
-                    <FaMapMarkerAlt className="text-amber-500 text-lg" />
-                  </div>
-                  <div>
-                    <p className="text-slate-400 text-sm mb-1">Location</p>
-                    <p className="text-white text-base">Surrey, BC, Canada</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Social Icons */}
-              <div className="mt-8 flex-shrink-0">
-                <h4 className="text-lg font-semibold text-white mb-4">Connect with me</h4>
-                <div className="flex gap-3">
-                  <a
-                    href="https://github.com/KehanHetti"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-lg bg-slate-700/50 border border-slate-600 flex items-center justify-center text-xl text-slate-300 hover:bg-amber-500 hover:text-white hover:border-amber-500 hover:scale-110 transition-all duration-300"
-                    aria-label="GitHub"
+              <div className="space-y-4">
+                <Link
+                  href="mailto:kehanhetti@gmail.com"
+                  className="group flex items-center gap-3 text-foreground hover:text-muted-foreground transition-colors duration-300"
+                >
+                  <span className="text-base sm:text-lg">kehanhetti@gmail.com</span>
+                  <svg
+                    className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <FaGithub />
-                  </a>
-                  <a
-                    href="https://linkedin.com/in/kehan-hettiarachchi"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-lg bg-slate-700/50 border border-slate-600 flex items-center justify-center text-xl text-slate-300 hover:bg-amber-500 hover:text-white hover:border-amber-500 hover:scale-110 transition-all duration-300"
-                    aria-label="LinkedIn"
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+                <Link
+                  href="tel:+16047272452"
+                  className="group flex items-center gap-3 text-foreground hover:text-muted-foreground transition-colors duration-300"
+                >
+                  <span className="text-base sm:text-lg">604-727-2452</span>
+                  <svg
+                    className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <FaLinkedin />
-                  </a>
-                  <a
-                    href="mailto:kehanhetti@gmail.com"
-                    className="w-12 h-12 rounded-lg bg-slate-700/50 border border-slate-600 flex items-center justify-center text-xl text-slate-300 hover:bg-amber-500 hover:text-white hover:border-amber-500 hover:scale-110 transition-all duration-300"
-                    aria-label="Email"
-                  >
-                    <FaEnvelope />
-                  </a>
-                  <a
-                    href="tel:+16047272452"
-                    className="w-12 h-12 rounded-lg bg-slate-700/50 border border-slate-600 flex items-center justify-center text-xl text-slate-300 hover:bg-amber-500 hover:text-white hover:border-amber-500 hover:scale-110 transition-all duration-300"
-                    aria-label="Phone"
-                  >
-                    <FaPhone />
-                  </a>
-                </div>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
               </div>
             </div>
           </div>
 
-          {/* Contact Form */}
-          <div className={`${isVisible ? 'fade-in-up' : 'opacity-0'} flex flex-col lg:col-span-2`} style={{ animationDelay: '0.3s' }}>
-            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 flex-1 flex flex-col min-h-0">
-              <h3 className="text-xl font-bold text-white mb-6 flex-shrink-0">Send a Message</h3>
-              <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col min-h-0">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-shrink-0">
-                  <div>
-                    <label htmlFor="name" className="block text-slate-300 mb-2 text-sm">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white text-sm placeholder-slate-400 focus:outline-none focus:border-amber-500 transition-colors"
-                      placeholder="Your name"
-                    />
-                  </div>
+          <div className="space-y-6 sm:space-y-8">
+            <div className="text-sm text-muted-foreground font-mono">ELSEWHERE</div>
 
-                  <div>
-                    <label htmlFor="email" className="block text-slate-300 mb-2 text-sm">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white text-sm placeholder-slate-400 focus:outline-none focus:border-amber-500 transition-colors"
-                      placeholder="your.email@example.com"
-                    />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { name: 'GitHub', handle: '@KehanHetti', url: 'https://github.com/KehanHetti' },
+                { name: 'LinkedIn', handle: 'kehan-hettiarachchi', url: 'https://linkedin.com/in/kehan-hettiarachchi' },
+              ].map((social) => (
+                <Link
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300 hover:shadow-sm"
+                >
+                  <div className="space-y-2">
+                    <div className="text-foreground group-hover:text-muted-foreground transition-colors duration-300">
+                      {social.name}
+                    </div>
+                    <div className="text-sm text-muted-foreground">{social.handle}</div>
                   </div>
+                </Link>
+              ))}
+            </div>
+
+            <div className="space-y-4">
+              <div className="text-sm text-muted-foreground font-mono">SEND A MESSAGE</div>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Name"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-muted-foreground/50 transition-colors"
+                  />
                 </div>
-
-                <div className="flex-1 flex flex-col min-h-0">
-                  <label htmlFor="message" className="block text-slate-300 mb-2 text-sm">
-                    Message
-                  </label>
+                <div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="Email"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-muted-foreground/50 transition-colors"
+                  />
+                </div>
+                <div>
                   <textarea
-                    id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
                     rows={4}
-                    className="w-full px-4 py-3 rounded-lg bg-slate-700/50 border border-slate-600 text-white text-sm placeholder-slate-400 focus:outline-none focus:border-amber-500 transition-colors resize-none"
-                    placeholder="Your message..."
+                    placeholder="Message"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-muted-foreground/50 transition-colors resize-none"
                   />
                 </div>
-
                 <button
                   type="submit"
-                  className="w-full px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white text-base font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex-shrink-0"
+                  className="w-full px-6 py-3 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300"
                 >
                   Send Message
                 </button>
@@ -212,13 +162,23 @@ export default function Contact() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Footer */}
-        <footer className={`text-center mt-8 pt-8 border-t border-slate-700 ${isVisible ? 'fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
-          <p className="text-slate-400 text-sm">
-            © 2026 Kehan Hettiarachchi. Built with React & Tailwind CSS.
-          </p>
-        </footer>
+      {/* Subtle Skyline Silhouette at Footer */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none opacity-[0.05]">
+        <svg
+          viewBox="0 0 1200 200"
+          className="w-full h-full"
+          preserveAspectRatio="none"
+          style={{ filter: 'grayscale(100%)' }}
+        >
+          {/* Skyline silhouette */}
+          <path
+            d="M0,200 L0,120 L50,120 L50,80 L100,80 L100,140 L150,140 L150,100 L200,100 L200,160 L250,160 L250,120 L300,120 L300,180 L350,180 L350,140 L400,140 L400,100 L450,100 L450,160 L500,160 L500,120 L550,120 L550,80 L600,80 L600,140 L650,140 L650,100 L700,100 L700,160 L750,160 L750,120 L800,120 L800,180 L850,180 L850,140 L900,140 L900,100 L950,100 L950,160 L1000,160 L1000,120 L1050,120 L1050,80 L1100,80 L1100,140 L1150,140 L1150,100 L1200,100 L1200,200 Z"
+            fill="currentColor"
+            className="text-foreground"
+          />
+        </svg>
       </div>
     </section>
   );

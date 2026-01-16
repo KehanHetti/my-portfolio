@@ -21,18 +21,26 @@ export default function Hero({ scrollTo }: HeroProps) {
       {/* 1) Semi-transparent overlay covering entire hero */}
       <div className="absolute inset-0 bg-black/50 z-10" />
 
+      {/* Gradient mask at bottom to fade city into black */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-[20%] z-15 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, transparent 0%, #0a0a0a 100%)'
+        }}
+      />
+
       {/* 2) Centered content (heading, subtitle, contact, icons) */}
       <div className="relative z-20 flex h-full flex-col items-center justify-center px-4 text-center">
         <h1 className="text-5xl md:text-7xl font-extrabold text-gray-100 drop-shadow-lg">
           Kehan Hettiarachchi
         </h1>
         <p className="mt-3 text-xl md:text-2xl text-gray-200">
-          Computer Science Student &middot; Web Developer &middot; Game Developer
+          Computer Science Student, Software Engineer
         </p>
 
         {/* Contact line */}
         <p className="mt-2 text-sm text-slate-300 flex flex-wrap justify-center items-center gap-x-2">
-          <span>Surrey, BC</span>
+          <span>Vancouver, BC</span>
           <span className="text-amber-500">|</span>
           <a
             href="mailto:kehanhetti@gmail.com"

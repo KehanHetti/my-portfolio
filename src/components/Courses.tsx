@@ -1,113 +1,133 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FaCode, FaBrain, FaDatabase, FaCalculator, FaCheckCircle } from 'react-icons/fa';
+import React, { useEffect, useRef } from 'react';
+import { FaCode, FaBrain, FaDatabase, FaCalculator, FaCheckCircle, FaServer, FaGamepad, FaCog } from 'react-icons/fa';
 
 interface Course {
   name: string;
   description: string;
-  category: 'CS' | 'Math' | 'Data Science';
+  category: 'CS' | 'Math' | 'Data Science' | 'Other';
   icon: React.ComponentType<{ className?: string }>;
   completed: boolean;
 }
 
 const COURSES: Course[] = [
-  { 
-    name: 'Machine Architecture', 
-    description: 'Assembly language and low-level system programming.',
-    category: 'CS', 
-    icon: FaCode, 
-    completed: true 
+  // Computer Science Courses
+  {
+    name: 'Computer Hardware and Operating Systems',
+    description: 'Computer architecture, hardware components, and operating system fundamentals.',
+    category: 'CS',
+    icon: FaCog,
+    completed: true,
   },
-  { 
-    name: 'Machine Learning', 
-    description: 'Neural networks and model evaluation.',
-    category: 'CS', 
-    icon: FaBrain, 
-    completed: true 
+  {
+    name: 'Introduction to Computer Networking',
+    description: 'Network protocols, TCP/IP, network architecture, and distributed systems.',
+    category: 'CS',
+    icon: FaServer,
+    completed: true,
   },
-  { 
-    name: 'Computer Vision', 
-    description: 'Image processing and computer vision algorithms.',
-    category: 'CS', 
-    icon: FaBrain, 
-    completed: true 
+  {
+    name: 'Introduction to Software Engineering',
+    description: 'Software engineering principles, design patterns, and development methodologies.',
+    category: 'CS',
+    icon: FaCode,
+    completed: true,
   },
-  { 
-    name: 'Software Construction', 
-    description: 'Version control, testing, and agile methodologies.',
-    category: 'CS', 
-    icon: FaCode, 
-    completed: true 
+  {
+    name: 'Video Game Programming',
+    description: 'Game development, graphics programming, and interactive systems.',
+    category: 'CS',
+    icon: FaGamepad,
+    completed: true,
   },
-  { 
-    name: 'Data Structures & Algorithms', 
-    description: 'Advanced algorithms and complexity analysis.',
-    category: 'CS', 
-    icon: FaCode, 
-    completed: true 
+  {
+    name: 'Computer Graphics',
+    description: '3D graphics rendering, shaders, transformations, and graphics programming.',
+    category: 'CS',
+    icon: FaCode,
+    completed: true,
   },
-  { 
-    name: 'Artificial Intelligence', 
-    description: 'Search, planning, and knowledge representation.',
-    category: 'CS', 
-    icon: FaBrain, 
-    completed: true 
+  {
+    name: 'Applied Machine Learning',
+    description: 'Practical machine learning applications, model training, and evaluation.',
+    category: 'CS',
+    icon: FaBrain,
+    completed: true,
   },
-  { 
-    name: 'Computer Networking', 
-    description: 'Network protocols and distributed systems.',
-    category: 'CS', 
-    icon: FaCode, 
-    completed: true 
+  {
+    name: 'Data Structures and Algorithms',
+    description: 'Advanced algorithms, data structures, and complexity analysis for efficient problem solving.',
+    category: 'CS',
+    icon: FaCode,
+    completed: true,
   },
-  { 
-    name: 'Data Science', 
-    description: 'Statistical analysis and data visualization.',
-    category: 'Data Science', 
-    icon: FaDatabase, 
-    completed: true 
+  {
+    name: 'Artificial Intelligence',
+    description: 'Search, planning, knowledge representation, and the basics of machine learning.',
+    category: 'CS',
+    icon: FaBrain,
+    completed: true,
   },
-  { 
-    name: 'Statistics', 
+  {
+    name: 'Software Construction',
+    description: 'Software engineering best practices, version control, testing, and agile methodologies.',
+    category: 'CS',
+    icon: FaCode,
+    completed: true,
+  },
+  {
+    name: 'Models of Computation',
+    description: 'Formal models, automata theory, and computational complexity.',
+    category: 'CS',
+    icon: FaCode,
+    completed: true,
+  },
+  {
+    name: 'Introduction to Computer Systems',
+    description: 'System-level programming, memory management, and computer organization.',
+    category: 'CS',
+    icon: FaCog,
+    completed: true,
+  },
+  {
+    name: 'Intermediate Algorithm Design and Analysis',
+    description: 'Advanced algorithmic techniques and complexity analysis.',
+    category: 'CS',
+    icon: FaCode,
+    completed: true,
+  },
+  // Data Science Courses
+  {
+    name: 'Introduction to Data Science',
+    description: 'Statistical analysis, data visualization, and data-driven decision making.',
+    category: 'Data Science',
+    icon: FaDatabase,
+    completed: true,
+  },
+  // Math Courses
+  {
+    name: 'Statistics',
     description: 'Probability theory and statistical inference.',
-    category: 'Math', 
-    icon: FaCalculator, 
-    completed: true 
+    category: 'Math',
+    icon: FaCalculator,
+    completed: true,
   },
-  { 
-    name: 'Calculus III', 
+  {
+    name: 'Calculus III',
     description: 'Multivariable calculus and vector fields.',
-    category: 'Math', 
-    icon: FaCalculator, 
-    completed: true 
+    category: 'Math',
+    icon: FaCalculator,
+    completed: true,
+  },
+  {
+    name: 'Matrix Algebra',
+    description: 'Linear algebra, matrix operations, and vector spaces.',
+    category: 'Math',
+    icon: FaCalculator,
+    completed: true,
   },
 ];
 
-const CATEGORY_INFO = {
-  CS: { 
-    label: 'Computer Science', 
-    icon: FaCode, 
-    color: 'from-blue-500/20 to-cyan-500/20',
-    borderColor: 'border-l-cyan-500',
-    lineColor: 'bg-cyan-500'
-  },
-  Math: { 
-    label: 'Mathematics', 
-    icon: FaCalculator, 
-    color: 'from-purple-500/20 to-pink-500/20',
-    borderColor: 'border-l-pink-500',
-    lineColor: 'bg-pink-500'
-  },
-  'Data Science': { 
-    label: 'Data Science', 
-    icon: FaDatabase, 
-    color: 'from-green-500/20 to-emerald-500/20',
-    borderColor: 'border-l-green-500',
-    lineColor: 'bg-green-500'
-  },
-};
-
 export default function Courses() {
-  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -115,11 +135,11 @@ export default function Courses() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true);
+            entry.target.classList.add('animate-fade-in-up');
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.3, rootMargin: '0px 0px -20% 0px' }
     );
 
     if (sectionRef.current) {
@@ -141,56 +161,42 @@ export default function Courses() {
     <section
       id="activities"
       ref={sectionRef}
-      className="bg-slate-800/50 py-6 md:py-8 relative flex flex-col"
+      className="min-h-screen py-20 sm:py-32 opacity-0"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 flex flex-col">
-        <div className={`text-center mb-4 flex-shrink-0 ${isVisible ? 'fade-in-up' : 'opacity-0'}`}>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-1">
-            Academic <span className="text-amber-500">Courses</span>
-          </h2>
-          <p className="text-slate-300 text-xs leading-relaxed">Key coursework from my Computer Science degree at UBC.</p>
-        </div>
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-16">
+        <div className="space-y-12 sm:space-y-16">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="text-sm text-muted-foreground font-mono tracking-wider">COURSES</div>
+            <h2 className="text-3xl sm:text-4xl font-light">Academic Courses</h2>
+            <p className="text-muted-foreground">Key coursework from my Computer Science degree at UBC.</p>
+          </div>
 
-        <div className="space-y-6">
-          {Object.entries(coursesByCategory).map(([category, courses], categoryIdx) => {
-            const categoryInfo = CATEGORY_INFO[category as keyof typeof CATEGORY_INFO];
-            
-            return (
-              <div
-                key={category}
-                className={`${isVisible ? 'fade-in-up' : 'opacity-0'}`}
-                style={{ animationDelay: `${categoryIdx * 0.15}s` }}
-              >
-                <div className="mb-3">
-                  <div className={`h-0.5 ${categoryInfo.lineColor} rounded-full mb-2`}></div>
-                  <h3 className="text-lg font-bold text-white">{categoryInfo.label}</h3>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {courses.map((course, idx) => {
+          <div className="space-y-8 sm:space-y-12">
+            {Object.entries(coursesByCategory).map(([category, courses]) => (
+              <div key={category} className="space-y-4">
+                <div className="text-sm text-muted-foreground font-mono">{category}</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {courses.map((course) => {
                     const CourseIcon = course.icon;
                     return (
                       <div
                         key={course.name}
-                        className="bg-slate-800/50 border border-slate-700 rounded-lg p-3 hover:border-amber-500/50 transition-all duration-300 hover:shadow-lg group"
-                        style={{ animationDelay: `${(categoryIdx * 0.15) + (idx * 0.05)}s` }}
+                        className="group p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500"
                       >
-                        <div className="flex items-start gap-2.5">
-                          <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center border border-amber-500/50 flex-shrink-0">
-                            <CourseIcon className="text-amber-500 text-sm" />
+                        <div className="flex items-start gap-3">
+                          <div className="flex-shrink-0">
+                            <CourseIcon className="text-lg text-muted-foreground group-hover:text-foreground transition-colors" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-1.5 mb-1">
-                              <h4 className="text-xs font-semibold text-white group-hover:text-amber-500 transition-colors">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h4 className="text-sm font-medium group-hover:text-muted-foreground transition-colors">
                                 {course.name}
                               </h4>
                               {course.completed && (
-                                <FaCheckCircle className="text-green-500 text-xs flex-shrink-0" />
+                                <FaCheckCircle className="text-xs text-muted-foreground flex-shrink-0" />
                               )}
                             </div>
-                            <p className="text-slate-400 text-[10px] leading-tight">
-                              {course.description}
-                            </p>
+                            <p className="text-xs text-muted-foreground leading-tight">{course.description}</p>
                           </div>
                         </div>
                       </div>
@@ -198,28 +204,28 @@ export default function Courses() {
                   })}
                 </div>
               </div>
-            );
-          })}
-        </div>
+            ))}
+          </div>
 
-        {/* Summary Stats */}
-        <div className={`mt-4 flex-shrink-0 bg-slate-800/50 border border-slate-700 rounded-lg p-3 ${isVisible ? 'fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}>
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <div className="text-xl font-bold text-amber-500 mb-0.5">{COURSES.length}</div>
-              <div className="text-slate-300 text-xs">Total Courses</div>
-            </div>
-            <div>
-              <div className="text-xl font-bold text-amber-500 mb-0.5">
-                {COURSES.filter((c) => c.completed).length}
+          {/* Summary */}
+          <div className="pt-8 border-t border-border">
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div className="text-2xl font-light text-foreground mb-1">{COURSES.length}</div>
+                <div className="text-sm text-muted-foreground">Total Courses</div>
               </div>
-              <div className="text-slate-300 text-xs">Completed</div>
-            </div>
-            <div>
-              <div className="text-xl font-bold text-amber-500 mb-0.5">
-                {Object.keys(coursesByCategory).length}
+              <div>
+                <div className="text-2xl font-light text-foreground mb-1">
+                  {COURSES.filter((c) => c.completed).length}
+                </div>
+                <div className="text-sm text-muted-foreground">Completed</div>
               </div>
-              <div className="text-slate-300 text-xs">Categories</div>
+              <div>
+                <div className="text-2xl font-light text-foreground mb-1">
+                  {Object.keys(coursesByCategory).length}
+                </div>
+                <div className="text-sm text-muted-foreground">Categories</div>
+              </div>
             </div>
           </div>
         </div>

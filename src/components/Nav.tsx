@@ -14,26 +14,21 @@ type NavProps = {
 
 export default function Nav({ sections, activeSection, scrollTo }: NavProps) {
   return (
-     <nav className="fixed top-0 left-0 w-full bg-slate-900/80 backdrop-blur-md shadow-lg z-40 border-b border-slate-700/50">
-      <ul className="flex justify-center space-x-8 py-4">
-        {sections.map((sec) => (
-          <li key={sec.id}>
-            <button
-              onClick={() => scrollTo(sec.id)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 focus:outline-none ${
-                activeSection === sec.id
-                  ? 'text-amber-500 bg-amber-500/10 border border-amber-500/30'
-                  : 'text-slate-300 hover:text-amber-500 hover:bg-slate-800/50'
-              }`}
-            >
-              {sec.label}
-            </button>
-          </li>
+    <nav className="fixed left-8 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
+      <div className="flex flex-col gap-4">
+        {sections.map((section) => (
+          <button
+            key={section.id}
+            onClick={() => scrollTo(section.id)}
+            className={`w-2 h-8 rounded-full transition-all duration-500 ${
+              activeSection === section.id
+                ? 'bg-foreground'
+                : 'bg-muted-foreground/30 hover:bg-muted-foreground/60'
+            }`}
+            aria-label={`Navigate to ${section.label}`}
+          />
         ))}
-      </ul>
+      </div>
     </nav>
   );
 }
-
-
-

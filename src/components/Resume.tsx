@@ -1,12 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FaGraduationCap, FaCode, FaBriefcase, FaDownload, FaCodeBranch, FaRocket, FaBrain, FaChartLine, FaServer, FaImage } from 'react-icons/fa';
+import React, { useEffect, useRef } from 'react';
+import { FaGraduationCap, FaBriefcase, FaDownload, FaCodeBranch, FaRocket, FaBrain, FaChartLine, FaServer, FaImage } from 'react-icons/fa';
+import {
+  SiTypescript, SiHtml5, SiCss3, SiTailwindcss, SiCplusplus, SiC, SiPython,
+  SiReact, SiNextdotjs, SiGit, SiGithub, SiVercel,
+  SiOpencv, SiTensorflow
+} from 'react-icons/si';
+import { FaCode, FaTools, FaServer as FaServerIcon, FaMicrophone, FaBrain as FaBrainIcon, FaJava, FaLaptopCode } from 'react-icons/fa';
 
 const COURSES = [
   {
     code: 'CPSC',
     title: 'Machine Architecture',
     desc: 'Computer architecture, assembly language, and low-level system programming.',
-    icon: FaCode,
+    icon: FaCodeBranch,
     category: 'CS',
   },
   {
@@ -25,8 +31,8 @@ const COURSES = [
   },
   {
     code: 'CPSC',
-    title: 'Software Construction',
-    desc: 'Software engineering best practices, version control, testing, and agile methodologies.',
+    title: 'Software Engineering',
+    desc: 'Software engineering principles, design patterns, and development methodologies.',
     icon: FaCodeBranch,
     category: 'CS',
   },
@@ -51,10 +57,46 @@ const COURSES = [
     icon: FaServer,
     category: 'CS',
   },
+  {
+    code: 'CPSC',
+    title: 'Game Development',
+    desc: 'Game development, graphics programming, and interactive systems.',
+    icon: FaImage,
+    category: 'CS',
+  },
+];
+
+interface Skill {
+  name: string;
+  icon: React.ComponentType<{ className?: string }>;
+  level: number;
+  category: 'Languages' | 'Technologies' | 'Tools';
+}
+
+const SKILLS: Skill[] = [
+  // Languages - ordered from strongest to weakest
+  { name: 'Python', icon: SiPython, level: 5, category: 'Languages' },
+  { name: 'JavaScript', icon: FaCode, level: 5, category: 'Languages' },
+  { name: 'TypeScript', icon: SiTypescript, level: 5, category: 'Languages' },
+  { name: 'Java', icon: FaJava, level: 4, category: 'Languages' },
+  { name: 'C++', icon: SiCplusplus, level: 4, category: 'Languages' },
+  { name: 'C', icon: SiC, level: 4, category: 'Languages' },
+  { name: 'HTML', icon: SiHtml5, level: 5, category: 'Languages' },
+  { name: 'CSS', icon: SiCss3, level: 5, category: 'Languages' },
+  { name: 'Tailwind CSS', icon: SiTailwindcss, level: 5, category: 'Languages' },
+  { name: 'React', icon: SiReact, level: 5, category: 'Technologies' },
+  { name: 'Next.js', icon: SiNextdotjs, level: 5, category: 'Technologies' },
+  { name: 'Git', icon: SiGit, level: 5, category: 'Technologies' },
+  { name: 'GitHub', icon: SiGithub, level: 5, category: 'Technologies' },
+  { name: 'Vercel', icon: SiVercel, level: 5, category: 'Technologies' },
+  { name: 'VS Code', icon: FaLaptopCode, level: 5, category: 'Technologies' },
+  { name: 'OpenCV', icon: SiOpencv, level: 4, category: 'Tools' },
+  { name: 'TensorFlow', icon: SiTensorflow, level: 4, category: 'Tools' },
+  { name: 'Speech Recognition', icon: FaMicrophone, level: 4, category: 'Tools' },
+  { name: 'ML Frameworks', icon: FaBrainIcon, level: 4, category: 'Tools' },
 ];
 
 export default function Resume() {
-  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -62,11 +104,11 @@ export default function Resume() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true);
+            entry.target.classList.add('animate-fade-in-up');
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.3, rootMargin: '0px 0px -20% 0px' }
     );
 
     if (sectionRef.current) {
@@ -77,135 +119,198 @@ export default function Resume() {
   }, []);
 
   const handleDownload = () => {
-    // Create a link to download PDF (you'll need to add the actual PDF file)
     const link = document.createElement('a');
-    link.href = '/resume.pdf'; // Update this path when you add your PDF
+    link.href = '/resume.pdf';
     link.download = 'Kehan_Hettiarachchi_Resume.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
+  const skillsByCategory = SKILLS.reduce((acc, skill) => {
+    if (!acc[skill.category]) {
+      acc[skill.category] = [];
+    }
+    acc[skill.category].push(skill);
+    return acc;
+  }, {} as Record<string, Skill[]>);
+
   return (
-    <section 
-      id="resume" 
+    <section
+      id="resume"
       ref={sectionRef}
-      className="bg-slate-800/50 py-12 md:py-16 relative flex flex-col overflow-y-auto"
+      className="min-h-screen py-20 sm:py-32 opacity-0 relative"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 flex-1 flex flex-col min-h-0">
-        <div className={`text-center mb-6 flex-shrink-0 ${isVisible ? 'fade-in-up' : 'opacity-0'}`}>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Resume</h2>
-          <button
-            onClick={handleDownload}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-          >
-            <FaDownload />
-            Download PDF
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-1 min-h-0">
-          {/* Left Column: Education & Experience */}
-          <div className="space-y-4">
-            {/* Education */}
-            <div className={`${isVisible ? 'fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.1s' }}>
-              <div className="inline-flex items-center gap-2 mb-3">
-                <FaGraduationCap className="text-amber-500 text-lg" />
-                <h3 className="text-lg font-bold text-white">Education</h3>
-              </div>
-              <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 hover:border-amber-500/50 transition-all duration-300 hover:shadow-xl">
-                <p className="text-sm text-white font-semibold mb-1">
-                  The University of British Columbia
-                </p>
-                <p className="text-slate-300 text-xs mb-1">Bachelor of Science in Computer Science</p>
-                <p className="text-amber-500 italic text-xs">Expected Graduation: Sept 2026</p>
-              </div>
-            </div>
-
-            {/* Experience */}
-            <div className={`${isVisible ? 'fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.3s' }}>
-              <div className="inline-flex items-center gap-2 mb-3">
-                <FaBriefcase className="text-amber-500 text-lg" />
-                <h3 className="text-lg font-bold text-white">Experience</h3>
-              </div>
-              
-              {/* Basis Learning Foundation */}
-              <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 hover:border-amber-500/50 transition-all duration-300 hover:shadow-xl mb-3">
-                <p className="text-sm text-white font-semibold mb-1">
-                  Software Development Intern
-                </p>
-                <p className="text-slate-300 text-xs mb-1">Basis Learning Foundation</p>
-                <p className="text-amber-500 italic text-[10px] mb-1.5">Oct 2025 – Dec 2025 • Toronto, ON</p>
-                <ul className="text-left text-slate-300 space-y-1 text-[10px] mt-1.5">
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 mt-0.5 text-xs">▸</span>
-                    <span>Engineered a student and alumni tracking platform using <span className="font-semibold text-white">Next.js</span>, <span className="font-semibold text-white">Django</span>, and <span className="font-semibold text-white">PostgreSQL</span> to centralize disparate data, creating a single source of truth for student lifecycle management.</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 mt-0.5 text-xs">▸</span>
-                    <span>Architected a secure REST API with <span className="font-semibold text-white">Google Drive</span> integration, automating workflows and enhancing security.</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 mt-0.5 text-xs">▸</span>
-                    <span>Reduced manual reporting overhead by <span className="font-semibold text-white">30%</span> by developing custom, real-time interactive data visualizations.</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Wrap-It Moving */}
-              <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 hover:border-amber-500/50 transition-all duration-300 hover:shadow-xl">
-                <p className="text-sm text-white font-semibold mb-1">
-                  Full Stack Developer
-                </p>
-                <p className="text-slate-300 text-xs mb-1">Wrap-It Moving</p>
-                <p className="text-amber-500 italic text-[10px] mb-1.5">Oct 2024 – Jan 2025 • Vancouver, BC</p>
-                <ul className="text-left text-slate-300 space-y-1 text-[10px] mt-1.5">
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 mt-0.5 text-xs">▸</span>
-                    <span>Used <span className="font-semibold text-white">JavaScript</span>, <span className="font-semibold text-white">TypeScript</span>, and <span className="font-semibold text-white">GitHub CI/CD</span> to build features, achieving zero-downtime deployments.</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 mt-0.5 text-xs">▸</span>
-                    <span>Redesigned and modernized core UI components, substantially improving navigation efficiency by <span className="font-semibold text-white">40%</span>.</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 mt-0.5 text-xs">▸</span>
-                    <span>Optimized contact form pipeline, reducing server response latency by <span className="font-semibold text-white">25%</span> and increasing engagement by <span className="font-semibold text-white">60%</span>.</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-500 mt-0.5 text-xs">▸</span>
-                    <span>Optimized mobile UX with <span className="font-semibold text-white">Tailwind CSS</span>; shipped fully production-ready on desktop, tablets, and mobile.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+      {/* Sunset Glow Top Border */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-gradient-to-b from-orange-500/10 via-purple-500/10 to-transparent blur-3xl pointer-events-none" />
+      
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-16 relative z-10">
+        <div className="space-y-12 sm:space-y-16">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <h2 className="text-3xl sm:text-4xl font-light">Resume</h2>
+            <button
+              onClick={handleDownload}
+              className="inline-flex items-center gap-2 px-4 py-2 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-300 text-sm font-mono"
+            >
+              <FaDownload className="text-xs" />
+              Download PDF
+            </button>
           </div>
 
-          {/* Right Column: Relevant Coursework */}
-          <div className={`${isVisible ? 'fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
-            <div className="inline-flex items-center gap-2 mb-3">
-              <FaCode className="text-amber-500 text-lg" />
-              <h3 className="text-lg font-bold text-white">Relevant Coursework</h3>
-            </div>
-            <div className="grid grid-cols-1 gap-2">
-                    {COURSES.map(({ code, title, desc, icon: Icon }) => (
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
+            {/* Left Column: Education, Experience, Coursework */}
+            <div className="lg:col-span-8 space-y-12 sm:space-y-16">
+              {/* Education */}
+              <div className="space-y-6">
+                <div className="text-sm text-muted-foreground font-mono">EDUCATION</div>
+                <div className="space-y-4">
+                  <div className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-4 border-b border-border/50 hover:border-border transition-colors duration-500">
+                    <div className="lg:col-span-2">
+                      <div className="text-sm text-muted-foreground font-mono">2022 — 2027</div>
+                    </div>
+                    <div className="lg:col-span-10 space-y-2">
+                      <div>
+                        <h3 className="text-lg font-medium">Bachelor of Science in Computer Science</h3>
+                        <div className="text-muted-foreground">The University of British Columbia</div>
+                      </div>
+                      <p className="text-muted-foreground text-sm">Expected Graduation: April 2027</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Experience */}
+              <div className="space-y-6">
+                <div className="text-sm text-muted-foreground font-mono">EXPERIENCE</div>
+                <div className="space-y-8 sm:space-y-12">
+                  {[
+                    {
+                      year: '2025',
+                      role: 'Software Development Intern',
+                      company: 'Basis Learning Foundation',
+                      period: 'Oct 2025 — Present',
+                      location: 'Toronto, ON',
+                      description: [
+                        'Engineered a student and alumni tracking platform using Next.js, Django, and PostgreSQL to centralize disparate data, creating a single source of truth for student lifecycle management.',
+                        'Architected a secure REST API managing 300+ profiles with optimized pagination and advanced filtering.',
+                        'Reduced manual reporting overhead by 30% by developing custom, real-time interactive data visualizations.',
+                      ],
+                      tech: ['Next.js', 'Django', 'PostgreSQL', 'REST API'],
+                    },
+                    {
+                      year: '2024',
+                      role: 'Full Stack Developer',
+                      company: 'Wrap-It Moving',
+                      period: 'Oct 2024 — Jan 2025',
+                      location: 'Vancouver, BC',
+                      description: [
+                        'Used JavaScript, TypeScript, and GitHub CI/CD to build features, achieving zero-downtime deployments.',
+                        'Redesigned and modernized core UI components, substantially improving navigation efficiency by 40%.',
+                        'Optimized contact form pipeline, reducing server response latency by 25% and increasing engagement by 60%.',
+                        'Optimized mobile UX with Tailwind CSS; shipped fully production-ready on desktop, tablets, and mobile.',
+                      ],
+                      tech: ['JavaScript', 'TypeScript', 'GitHub CI/CD', 'Tailwind CSS'],
+                    },
+                  ].map((job, index) => (
+                    <div
+                      key={index}
+                      className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-border transition-colors duration-500"
+                    >
+                      <div className="lg:col-span-2">
+                        <div className="text-xl sm:text-2xl font-light text-muted-foreground group-hover:text-foreground transition-colors duration-500">
+                          {job.year}
+                        </div>
+                      </div>
+
+                      <div className="lg:col-span-10 space-y-3">
+                        <div>
+                          <h3 className="text-lg sm:text-xl font-medium">{job.role}</h3>
+                          <div className="text-muted-foreground">{job.company}</div>
+                          <div className="text-xs text-muted-foreground mt-1">{job.period} • {job.location}</div>
+                        </div>
+                        <ul className="space-y-2 text-muted-foreground leading-relaxed text-sm">
+                          {job.description.map((item, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="text-foreground mt-1">▸</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="flex flex-wrap gap-2 mt-3">
+                          {job.tech.map((tech) => (
+                            <span
+                              key={tech}
+                              className="px-2 py-1 text-xs text-muted-foreground rounded group-hover:border-muted-foreground/50 transition-colors duration-500"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Relevant Coursework */}
+              <div className="space-y-6">
+                <div className="text-sm text-muted-foreground font-mono">RELEVANT COURSEWORK</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {COURSES.map((course) => {
+                    const Icon = course.icon;
+                    return (
                       <div
-                        key={code}
-                        className="bg-slate-800/50 border border-slate-700 rounded-lg p-2.5 hover:border-amber-500/50 transition-all duration-300 hover:shadow-xl group"
+                        key={course.title}
+                        className="group p-4 border border-border rounded-lg hover:border-muted-foreground/50 transition-all duration-500"
                       >
-                        <div className="flex items-start gap-2">
-                          <div className="flex-shrink-0 w-6 h-6 rounded bg-amber-500/20 flex items-center justify-center group-hover:bg-amber-500/30 transition-colors">
-                            <Icon className="text-amber-500 text-xs" />
-                          </div>
+                        <div className="flex items-start gap-3">
+                          <Icon className="text-lg text-muted-foreground group-hover:text-foreground transition-colors flex-shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
-                            <h4 className="text-xs font-semibold text-white mb-0.5">
-                              {title}
-                            </h4>
-                            <p className="text-slate-300 text-[10px] leading-tight line-clamp-1">{desc}</p>
+                            <h4 className="text-sm font-medium mb-1">{course.title}</h4>
+                            <p className="text-xs text-muted-foreground leading-tight">{course.desc}</p>
                           </div>
                         </div>
                       </div>
-                    ))}
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Skills */}
+            <div className="lg:col-span-4 space-y-8">
+              <div className="space-y-8">
+                <div className="space-y-6">
+                  <div className="text-sm text-muted-foreground font-mono">SKILLS</div>
+                  {Object.entries(skillsByCategory).map(([category, skills]) => (
+                    <div key={category} className="space-y-4">
+                      <div className="text-xs text-muted-foreground font-mono">{category}</div>
+                      <div className="space-y-3">
+                        {skills.map((skill) => {
+                          const SkillIcon = skill.icon;
+                          return (
+                            <div
+                              key={skill.name}
+                              className="group"
+                            >
+                              <div className="flex items-center gap-2 mb-1.5">
+                                <SkillIcon className="text-sm text-muted-foreground group-hover:text-foreground transition-colors flex-shrink-0" />
+                                <h4 className="text-xs font-medium flex-1">{skill.name}</h4>
+                              </div>
+                              <div className="w-full bg-muted rounded-full h-1">
+                                <div
+                                  className="bg-foreground h-1 rounded-full transition-all duration-500"
+                                  style={{ width: `${(skill.level / 5) * 100}%` }}
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -213,6 +318,3 @@ export default function Resume() {
     </section>
   );
 }
-
-
-

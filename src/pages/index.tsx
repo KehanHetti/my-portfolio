@@ -9,7 +9,6 @@ import About from '../components/About';
 import Resume from '../components/Resume';
 import Projects from '../components/Projects';
 import Courses from '../components/Courses';
-import Skills from '../components/Skills';
 import Contact from '../components/Contact';
 
 interface Project {
@@ -28,13 +27,17 @@ const SECTIONS = [
   { id: 'resume',     label: 'Resume'   },
   { id: 'projects',   label: 'Projects' },
   { id: 'activities', label: 'Courses'  },
-  { id: 'statistics', label: 'Skills'   },
   { id: 'contact',    label: 'Contact'  },
 ];
 
 export default function Home({ projects }: HomeProps) {
   const [activeSection, setActiveSection] = useState<string>('hero');
   const mainRef = useRef<HTMLElement>(null);
+
+  // Enable dark mode by default
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
 
   // Highlight nav links on scroll
   useEffect(() => {
@@ -133,14 +136,13 @@ export default function Home({ projects }: HomeProps) {
 
       <main
         ref={mainRef}
-        className="overflow-y-auto h-screen"
+        className="overflow-y-auto h-screen bg-background text-foreground"
       >
         <Hero scrollTo={scrollTo} />
         <About />
         <Resume />
         <Projects projects={projects} />
         <Courses />
-        <Skills />
         <Contact />
       </main>
     </>
@@ -153,19 +155,19 @@ export const getStaticProps: GetStaticProps = async () => {
       id: 1,
       title: 'Counter Strike 2 Damage Detection System',
       summary:
-        'Built ML-powered system to detect in-game damage events in real time using Python, OpenCV, and TensorFlow. Achieved 90%+ classification accuracy and reduced overall event misclassification by 35% via preprocessing. Engineered automated data pipeline to preprocess raw gameplay footage, improving training efficiency by 40%. Led a 3-person cross-functional team using Agile methods to successfully deliver a production-ready MVP.',
+        'An ML-powered system that detects in-game damage events in real time using Python, OpenCV, and TensorFlow. The system achieves 90%+ classification accuracy and reduces overall event misclassification by 35% through advanced preprocessing techniques. Features an automated data pipeline that preprocesses raw gameplay footage, improving training efficiency by 40%. Built by a 3-person cross-functional team using Agile methodologies to deliver a production-ready MVP.',
     },
     {
       id: 2,
       title: 'Navis – AI-Powered Voice Navigation Tool',
       summary:
-        'Developed AI-powered tool enabling hands-free navigation using Python, JavaScript, and speech recognition. Integrated advanced speech recognition engine achieving 95%+ command accuracy across major browsers. Reduced navigation by 60% compared to manual interaction through optimized voice command processing. Implemented essential WCAG-compliant features, supporting major screen readers and accessibility standards.',
+        'An AI-powered tool that enables hands-free navigation using Python, JavaScript, and speech recognition. The system integrates an advanced speech recognition engine achieving 95%+ command accuracy across major browsers. Optimized voice command processing reduces navigation time by 60% compared to manual interaction. Includes essential WCAG-compliant features, supporting major screen readers and accessibility standards.',
     },
     {
       id: 3,
       title: 'Content Distributer',
       summary:
-        'Developed a full-stack content distribution system enabling simultaneous uploads to Instagram, Reddit, YouTube, Pinterest, and LinkedIn using Next.js and Golang. Engineered concurrent upload workers with retry logic, validation, and dynamic forms for platform requirements. Instrumented metrics to monitor throughput and latency, improving efficiency by 40% under load.',
+        'A full-stack content distribution system that enables simultaneous uploads to Instagram, Reddit, YouTube, Pinterest, and LinkedIn using Next.js and Golang. The system features concurrent upload workers with retry logic, validation, and dynamic forms tailored to each platform&apos;s requirements. Built-in metrics monitor throughput and latency, improving overall efficiency by 40% under load.',
     },
   ];
 
