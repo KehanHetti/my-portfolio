@@ -30,7 +30,16 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoLink = `mailto:kehanhetti@gmail.com?subject=Contact from ${formData.name}&body=${encodeURIComponent(formData.message)}`;
+    
+    // Basic input validation and sanitization
+    const sanitizedName = formData.name.trim().slice(0, 100);
+    const sanitizedMessage = formData.message.trim().slice(0, 5000);
+    
+    if (!sanitizedName || !sanitizedMessage) {
+      return;
+    }
+    
+    const mailtoLink = `mailto:kehanhetti@gmail.com?subject=Contact from ${encodeURIComponent(sanitizedName)}&body=${encodeURIComponent(sanitizedMessage)}`;
     window.location.href = mailtoLink;
     setFormData({ name: "", email: "", message: "" });
   };
@@ -162,6 +171,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    maxLength={100}
                     placeholder="Name"
                     className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-muted-foreground/50 transition-colors"
                   />
@@ -183,6 +193,7 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     required
+                    maxLength={5000}
                     rows={4}
                     placeholder="Message"
                     className="w-full px-4 py-3 bg-background border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-muted-foreground/50 transition-colors resize-none"
