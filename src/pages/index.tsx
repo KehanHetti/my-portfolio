@@ -108,7 +108,80 @@ export default function Home({ projects }: HomeProps) {
   return (
     <>
       <Head>
-        <title>Kehan Hettiarachchi | Portfolio</title>
+        <title>Kehan Hettiarachchi | Computer Science Student & Software Engineer</title>
+        <meta
+          name="description"
+          content="Kehan Hettiarachchi - Computer Science Student at UBC and Software Engineer. Portfolio showcasing projects, experience, and technical skills in full-stack development, machine learning, and web development."
+        />
+        <meta name="keywords" content="Kehan Hettiarachchi, Software Engineer, Computer Science, UBC, Web Developer, Full Stack Developer, Vancouver, Portfolio" />
+        <meta name="author" content="Kehan Hettiarachchi" />
+        <link rel="canonical" href="https://kehanhetti.vercel.app/" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://kehanhetti.vercel.app/" />
+        <meta property="og:title" content="Kehan Hettiarachchi | Computer Science Student & Software Engineer" />
+        <meta
+          property="og:description"
+          content="Computer Science Student at UBC and Software Engineer. Portfolio showcasing projects, experience, and technical skills."
+        />
+        <meta property="og:site_name" content="Kehan Hettiarachchi Portfolio" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://kehanhetti.vercel.app/" />
+        <meta name="twitter:title" content="Kehan Hettiarachchi | Computer Science Student & Software Engineer" />
+        <meta
+          name="twitter:description"
+          content="Computer Science Student at UBC and Software Engineer. Portfolio showcasing projects, experience, and technical skills."
+        />
+        
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Kehan Hettiarachchi",
+              jobTitle: "Software Engineer",
+              url: "https://kehanhetti.vercel.app",
+              sameAs: [
+                "https://github.com/KehanHetti",
+                "https://linkedin.com/in/kehan-hettiarachchi",
+              ],
+              email: "kehanhetti@gmail.com",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Vancouver",
+                addressRegion: "BC",
+                addressCountry: "CA",
+              },
+              alumniOf: {
+                "@type": "EducationalOrganization",
+                name: "The University of British Columbia",
+                address: {
+                  "@type": "PostalAddress",
+                  addressLocality: "Vancouver",
+                  addressRegion: "BC",
+                  addressCountry: "CA",
+                },
+              },
+              knowsAbout: [
+                "Computer Science",
+                "Software Engineering",
+                "Web Development",
+                "Full Stack Development",
+                "Machine Learning",
+                "Python",
+                "TypeScript",
+                "JavaScript",
+                "React",
+                "Next.js",
+              ],
+            }),
+          }}
+        />
       </Head>
 
       <style jsx global>{`
