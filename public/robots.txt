@@ -1,3 +1,13 @@
+# Personal photos must never appear in image search.
+# Google's documented way to keep images out of Google Images is to block
+# Googlebot-Image. The page itself stays fully indexable for regular search.
+User-agent: Googlebot-Image
+Disallow: /photos/
+Disallow: /_next/image
+
+# Everything else: index the site. Photos additionally send
+# "X-Robots-Tag: noindex, noimageindex" (next.config.ts) for Bing and others.
 User-agent: *
 Allow: /
+
 Sitemap: https://kehanhetti.vercel.app/sitemap.xml

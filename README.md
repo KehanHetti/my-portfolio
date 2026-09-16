@@ -1,40 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# kehanhetti.vercel.app
 
-## Getting Started
+Personal portfolio of Kehan Hettiarachchi, Computer Science student at the University of British Columbia.
 
-First, run the development server:
+**Stack:** Next.js 15 (Pages Router) · React 19 · TypeScript (strict) · Tailwind CSS v4 · Vercel
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Structure
+
+```
+src/
+├── components/   layout/ · sections/ · contact/ · ui/
+├── data/         Content as typed data (experience, projects, coursework)
+├── hooks/        useReveal, useActiveSection, useContactInfo
+├── lib/          Shared validation; server/ for rate limiting, Turnstile, email
+├── pages/        index.tsx, api/contact.ts
+└── styles/       globals.css
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Content is defined as typed data in `src/data`, so updates require editing data rather than markup.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Contact form
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Currently disabled on the live site; the implementation remains in the repository. To re-enable, restore the commented-out references in `src/pages/index.tsx`, `src/data/profile.ts`, and `src/components/sections/Hero.tsx`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+`POST /api/contact` delivers messages through [Resend](https://resend.com). Spam protection is applied cheapest-first: a honeypot field with a minimum fill time, shared length and link-count validation, a per-IP sliding-window rate limit, and a server-verified Cloudflare Turnstile captcha.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Privacy
 
-## Learn More
+- Email and phone number are assembled client-side after hydration and do not appear in server-rendered HTML.
+- Photos in `public/photos/` are blocked for `Googlebot-Image`, served with `X-Robots-Tag: noindex, noimageindex`, and stripped of EXIF metadata. No `og:image` is defined.
+- Security headers include a strict Content-Security-Policy, HSTS, `nosniff`, and a restrictive Permissions-Policy (see `next.config.ts`).
 
-To learn more about Next.js, take a look at the following resources:
+## Development
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+```bash
+npm install
+npm run dev        # http://localhost:3000
+npm run typecheck
+npm run lint
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Environment variables
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `RESEND_API_KEY` | For the contact form | Message delivery via Resend |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Recommended | Renders the captcha widget |
+| `TURNSTILE_SECRET_KEY` | Recommended | Verifies captcha tokens server-side |
+| `CONTACT_TO_EMAIL` | No | Overrides the recipient address |
+| `CONTACT_FROM_EMAIL` | No | Overrides the sender (default `onboarding@resend.dev`) |
