@@ -11,6 +11,8 @@ export interface CourseGroup {
   courses: Course[];
 }
 
+export const IN_PROGRESS_COURSES = ["CPSC 425", "DSCI 430", "MATH 302"];
+
 // Titles match the UBC transcript.
 export const COURSE_GROUPS: CourseGroup[] = [
   {
