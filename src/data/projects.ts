@@ -9,6 +9,17 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    title: "UBC Academic Planner",
+    summary:
+      "A full-stack degree planner that audits requirements and generates course plans and timetables for UBC students.",
+    highlights: [
+      "Audits 5,700+ degree requirements and generates degree plans across 298 programs from prerequisite graphs, ordering courses by dependency.",
+      "Reduced database egress 96% by offloading cached data to Cloudflare R2 with column-scoped queries.",
+      "Constraint-based timetable optimizer builds conflict-free schedules from 14,800+ sections.",
+    ],
+    stack: ["Next.js", "TypeScript", "FastAPI", "PostgreSQL", "Docker"],
+  },
+  {
     title: "New Terra",
     summary:
       "A 2D action game built in C++ and OpenGL on a custom Entity Component System. Recognized as the best game for graphics in the class.",
@@ -44,12 +55,11 @@ export const PROJECTS: Project[] = [
   {
     title: "Content Distributor",
     summary:
-      "A full-stack platform that publishes content to Instagram, Reddit, YouTube, Pinterest, and LinkedIn simultaneously.",
+      "A platform that publishes content to Instagram, Reddit, YouTube, Pinterest, and LinkedIn simultaneously. I built the frontend as part of a team.",
     highlights: [
-      "Concurrent Go upload workers with retry logic and per-platform validation.",
-      "Dynamic forms tailored to each platform's requirements.",
-      "Built-in throughput and latency metrics; 40% more efficient under load.",
+      "Built the Next.js and TypeScript frontend for composing and publishing content across five platforms from one interface.",
+      "Dynamic forms tailored to each platform's requirements, with client-side validation.",
     ],
-    stack: ["Next.js", "TypeScript", "Go"],
+    stack: ["Next.js", "TypeScript"],
   },
 ];

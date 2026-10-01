@@ -13,7 +13,7 @@ export const EXPERIENCE: Role[] = [
     company: "Basis Learning Foundation",
     title: "Software Development Intern",
     period: "Oct 2025 — Present",
-    location: "Toronto, ON",
+    location: "Toronto, ON (Volunteer)",
     highlights: [
       "Engineered a full-stack student and alumni tracking platform using Next.js, Django, and PostgreSQL, consolidating scattered records so staff could manage the entire student lifecycle from enrollment through alumni outreach.",
       "Architected secure REST APIs with Django REST Framework, adding pagination and filtering across 300+ profiles.",
@@ -37,14 +37,13 @@ export const EXPERIENCE: Role[] = [
     company: "Wrap-It Moving",
     title: "Full Stack Developer",
     period: "Oct 2024 — Jan 2025",
-    location: "Vancouver, BC",
+    location: "Vancouver, BC (Contract)",
     highlights: [
-      "Deployed features using JavaScript, TypeScript, and GitHub Actions CI/CD, achieving zero-downtime deployments.",
-      "Redesigned and modernized core UI components, substantially improving accessibility and navigation efficiency.",
-      "Created a contact form using Node.js, optimizing server response latency and increasing website engagement by 60%.",
-      "Optimized mobile UX with Tailwind CSS, shipping a fully production-ready website on desktop, tablet, and mobile.",
+      "Translated emailed client requirements into working production updates using JavaScript and TypeScript.",
+      "Built a contact form backend with Node.js, adding a direct customer inquiry channel to the company site.",
+      "Made a desktop-only site mobile friendly by rebuilding stretched, broken layouts with Tailwind CSS breakpoints.",
     ],
-    stack: ["JavaScript", "TypeScript", "GitHub Actions", "Node.js", "Tailwind CSS"],
+    stack: ["JavaScript", "TypeScript", "Node.js", "Tailwind CSS"],
   },
 ];
 

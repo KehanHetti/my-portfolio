@@ -22,6 +22,9 @@ import {
   SiGo,
   SiR,
   SiClaude,
+  SiFastapi,
+  SiDocker,
+  SiCloudflare,
 } from "react-icons/si";
 
 export interface SkillGroup {
@@ -69,6 +72,10 @@ export const SKILL_GROUPS: SkillGroup[] = [
       { name: "VS Code", icon: FaLaptopCode },
       { name: "RESTful APIs", icon: FaExchangeAlt },
       { name: "Claude Code", icon: SiClaude },
+      { name: "Cursor", icon: FaLaptopCode },
+      { name: "FastAPI", icon: SiFastapi },
+      { name: "Docker", icon: SiDocker },
+      { name: "Cloudflare R2", icon: SiCloudflare },
     ],
   },
 ];
@@ -79,6 +86,8 @@ export const CONCEPTS = [
   "Frontend Development",
   "Machine Learning",
   "Artificial Intelligence",
+  "Software Engineering",
+  "Computer Vision",
   "Computer Graphics",
   "Networking",
   "Microservices",
