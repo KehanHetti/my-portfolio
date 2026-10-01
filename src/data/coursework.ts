@@ -11,7 +11,15 @@ export interface CourseGroup {
   courses: Course[];
 }
 
-export const IN_PROGRESS_COURSES = ["CPSC 425", "DSCI 430", "MATH 302"];
+export const IN_PROGRESS: CourseGroup = {
+  category: "In Progress",
+  primary: true,
+  courses: [
+    { code: "CPSC 425", name: "Computer Vision", description: "Image formation, feature detection, and visual recognition." },
+    { code: "DSCI 430", name: "Fairness, Accountability, Transparency and Ethics (FATE) in Data Science", description: "Bias, fairness, and the ethical use of data and machine learning." },
+    { code: "MATH 302", name: "Introduction to Probability", description: "Probability theory, random variables, and distributions." },
+  ],
+};
 
 // Titles match the UBC transcript.
 export const COURSE_GROUPS: CourseGroup[] = [

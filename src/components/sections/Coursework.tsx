@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
-import { COURSE_GROUPS, IN_PROGRESS_COURSES, type CourseGroup } from "@/data/coursework";
+import { COURSE_GROUPS, IN_PROGRESS, type CourseGroup } from "@/data/coursework";
 import { Section } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
 
@@ -33,22 +33,10 @@ export default function Coursework() {
       id="coursework"
       label="Coursework"
       title="Academic background"
-      description="Completed coursework toward my B.Sc. in Computer Science at UBC."
+      description="Completed and in-progress coursework toward my B.Sc. in Computer Science at UBC."
     >
       <div className="space-y-12">
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium">In progress</h3>
-          <ul className="flex flex-wrap gap-2">
-            {IN_PROGRESS_COURSES.map((code) => (
-              <li
-                key={code}
-                className="rounded-full border border-border/60 px-3 py-1 font-mono text-xs text-muted-foreground"
-              >
-                {code}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Group group={IN_PROGRESS} />
 
         {PRIMARY.map((group) => (
           <Group key={group.category} group={group} />
